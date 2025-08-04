@@ -3,7 +3,7 @@
 This repository provides a minimal and educational demonstration of **Event-Driven Ansible (EDA)**, including:
 
 - A simple **Ansible Rulebook** that listens for events and prints the received payload
-- A pair of shell scripts to test event delivery locally or remotely to an EDA server
+- Three shell scripts to test event delivery locally or remotely to an EDA server
 
 ---
 
@@ -53,7 +53,7 @@ This is useful for validating that payloads are properly received and processed.
 
 ### 📂 `scripts/`
 
-This directory includes two shell scripts:
+This directory includes three shell scripts:
 
 - **`send_payload_to_localhost.sh`**  
   Sends a sample JSON payload to a local webhook listener on `localhost:5005`. Useful for testing the rulebook locally.

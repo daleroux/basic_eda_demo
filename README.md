@@ -1,4 +1,4 @@
-# 🧠 Basic EDA Demo
+# 🔁 Basic EDA Demo
 
 This repository provides a minimal and educational demonstration of **Event-Driven Ansible (EDA)**, including:
 
@@ -21,10 +21,8 @@ An **Ansible Rulebook** defines event-driven logic, similar to "if-this-then-tha
    What to do when a rule matches — this could include:
    - Printing the event (`debug`, `print_event`)
    - Running an Ansible playbook
-   - Calling an API
-   - Setting a fact, etc.
+   - Running a Workflow, etc
 
-EDA brings reactive automation to life by combining these elements in a declarative YAML format.
 
 ---
 
@@ -35,8 +33,9 @@ basic_eda_demo/
 ├── rulebooks/
 │   └── print_payload.yml
 ├── scripts/
-│   ├── send_local.sh
-│   └── send_to_eda.sh
+│   ├── send_payload_to_localhost.sh
+│   └── send_payload_to_eda.sh
+│   └── set_eda_env.sh
 └── README.md
 ```
 
@@ -56,14 +55,18 @@ This is useful for validating that payloads are properly received and processed.
 
 This directory includes two shell scripts:
 
-- **`send_local.sh`**  
+- **`send_payload_to_localhost.sh`**  
   Sends a sample JSON payload to a local webhook listener on `localhost:5005`. Useful for testing the rulebook locally.
 
-- **`send_to_eda.sh`**  
-  Sends a similar payload to a remote **EDA Controller server**. You’ll need to adjust the URL and token for your environment.
+- **`set_eda_env.sh`**  
+  This will ask for the Event Stream URL and Token, which will then be used by `send_payload_to_eda.sh`. This script needs to be sourced
 
-Both scripts are basic templates and can be extended to simulate different events.
+```bash
+  source set_eda_env.sh
+```   
 
+- **`send_payload_to_eda.sh`**  
+  Sends a similar payload to the Event Stream of a remote **EDA Controller server**. Make sure to first source `set_eda_env.sh` before running
 ---
 
 ## 🚀 Quick Start
@@ -71,15 +74,14 @@ Both scripts are basic templates and can be extended to simulate different event
 1. **Start the rulebook listener**
 
 ```bash
-ansible-rulebook -i localhost, \
-  --rulebook rulebooks/print_payload.yml \
+ansible-rulebook -r rulebooks/print_payload.yml \
   --verbose
 ```
 
 2. **Send a test event**
 
 ```bash
-./scripts/send_local.sh
+./scripts/send_payload_to_localhost.sh
 ```
 
 3. **Observe the output** — The printed event data should appear in your terminal.
@@ -121,7 +123,7 @@ ansible-rulebook -i localhost, \
 
 - This demo is local and stateless by design
 - You can integrate other sources (e.g., Kafka) and actions (e.g., playbooks) by extending the rulebook
-- Refer to the [Red Hat EDA docs](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/event-driven_ansible_controller_user_guide/index) for advanced use cases
+- Refer to the [Ansible Rulebook documentation](https://ansible.readthedocs.io/projects/rulebook/en/v1.1.7/) for advanced use cases
 
 ---
 

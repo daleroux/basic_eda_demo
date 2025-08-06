@@ -127,6 +127,6 @@ ansible-rulebook -r rulebooks/print_payload.yml \
 
 ---
 
-## 🙌 Credits
+## Credits
 
 Maintained by [@daleroux](https://github.com/daleroux) — feel free to fork and extend.
